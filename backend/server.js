@@ -10,8 +10,10 @@ connectDB();
 
 app.use(cors());
 app.use(express.json());
-app.use('/api', todoRoutes); // Préfixe /api pour scalabilité
+
 app.use('/api/auth', authRoutes); // Routes d'authentification
+
+app.use('/api', todoRoutes); // Préfixe /api pour scalabilité
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,        // ← Empêche les doublons
-    lowercase: true
+    lowercase: true,
+    trim: true
   },
   password: {
     type: String,
@@ -20,16 +21,17 @@ const userSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-// Avant de sauvegarder, hacher le mot de passe
-userSchema.pre('save', async function(next) {
-  if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-  next();
+// Middleware pre-save : hachage du mot de passe avec async/await SANS next() mal placé
+userSchema.pre('save', async function () {
+  // Si le mot de passe n'a pas été modifié, on ne fait rien
+  if (!this.isModified('password')) return;
+
+  // Hachage du mot de passe
+  this.password = await bcrypt.hash(this.password, 12);
 });
 
-// Méthode pour comparer le mot de passe
-userSchema.methods.comparePassword = async function(candidatePassword) {
+// Méthode pour comparer le mot de passe lors de la connexion
+userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 

@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
 
     // Générer un token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "10d", // Le token expire en 10 jours
+      expiresIn: "5d", // Le token expire en 5 jours
     });
 
     res.status(201).json({
@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
 
     // Trouver l'utilisateur
     const user = await User.findOne({ email });
-    if (!user) {
+    if (!user) { 
       return res
         .status(401)
         .json({ message: "Email ou mot de passe incorrect" });

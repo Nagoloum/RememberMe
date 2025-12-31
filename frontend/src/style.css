@@ -51,3 +51,7 @@ html {
 .dark {
   transition: background-color 1s ease;
 }
+
+::-webkit-scrollbar {
+  display: none;        /* Épaisseur horizontale */
+}

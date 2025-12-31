@@ -12,6 +12,7 @@ export default function ThemeToggle() {
 
     if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
       document.documentElement.classList.add('dark');
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsDark(true);
     } else {
       document.documentElement.classList.remove('dark');
@@ -34,13 +35,13 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed bottom-8 right-8 z-50 p-4 bg-white dark:bg-gray-800 rounded-full shadow-2xl hover:shadow-indigo-500/20 dark:hover:shadow-indigo-400/30 border border-gray-200 dark:border-gray-700 transition-all duration-500 group"
+      className="fixed bottom-8 right-8 z-50 p-4 bg-white dark:bg-gray-800 rounded-full hover:shadow-indigo-500/20 dark:hover:shadow-indigo-400/30 border border-gray-200 dark:border-gray-700 transition-all duration-500 group"
       aria-label="Toggle dark mode"
     >
       <div className="relative w-8 h-8">
         {/* Soleil (light mode) */}
         <Sun
-          className={`absolute inset-0 w-8 h-8 text-indigo-400 transition-all duration-700 ${
+          className={`absolute inset-0 w-8 h-8 text-indigo-500 transition-all duration-700 ${
             isDark ? 'opacity-0 rotate-90 scale-0' : 'opacity-100 rotate-0 scale-100'
           }`}
         />
